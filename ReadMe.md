@@ -27,7 +27,7 @@ The dataset represents one year of business activity, from July 1, 2025, through
     Annual revenue is nearly evenly split between **services ($54,647)** and **equipment sales ($54,175).** However, services generate significantly higher profits, contributing $41,675 compared to $22,874 from equipment sales.
 
 
-    ![Revenue Profit](Visualizations\profit_rev_analysis.png)
+![Revenue Profit](Visualizations/profit_rev_analysis.png)
 
  *Chart made using Tableau Public*
 
@@ -37,7 +37,7 @@ The dataset represents one year of business activity, from July 1, 2025, through
 
     Malware removal is the highest-revenue service, generating $7,523 annually. This indicates strong customer demand for cybersecurity and malware-related support.
 
-![Service Revenue](Visualizations\services_revenue.png)
+![Revenue Profit](./Visualizations/profit_rev_analysis.png)
     *Chart made using Tableau Public*
 
  **Recommendation:** Consider expanding cybersecurity services through additional offerings, such as security assessments, preventative maintenance, and customer education on safe internet practices.
