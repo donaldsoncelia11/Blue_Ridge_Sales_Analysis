@@ -27,7 +27,7 @@ The dataset represents one year of business activity, from July 1, 2025, through
     Annual revenue is nearly evenly split between **services ($54,647)** and **equipment sales ($54,175).** However, services generate significantly higher profits, contributing $41,675 compared to $22,874 from equipment sales.
 
 
-    ![Revenue Profit](Visualizations\profti_rev_analysis.png)
+    ![Revenue Profit](Visualizations\profit_rev_analysis.png)...testing testing
 
  *Chart made using Tableau Public*
 
