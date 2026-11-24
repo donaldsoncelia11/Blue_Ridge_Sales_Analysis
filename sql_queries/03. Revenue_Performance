@@ -1,0 +1,79 @@
+/*
+### 1. Revenue Performance
+1. What is the total annual revenue generated during the reporting period?
+2. Which services generated the most money?
+3. Which items sold generated the most money? 
+4. What is the average transaction value? */
+
+-- Adding Revenue, Cost of Goods Sold, Gross Profit, and Gross Profit Margin
+
+ALTER TABLE transactions
+ADD COLUMN revenue NUMERIC(12,2),
+ADD COLUMN cogs NUMERIC(12,2),
+ADD COLUMN gross_profit NUMERIC(12,2),
+ADD COLUMN gross_profit_margin NUMERIC(6,2);
+
+UPDATE transactions
+SET
+    revenue = quantity * unit_price,
+    cogs = quantity * unit_cost,
+    gross_profit = (quantity * unit_price) - (quantity * unit_cost),
+    gross_profit_margin =
+        ROUND(
+            ((unit_price - unit_cost) / NULLIF(unit_price, 0)) * 100,
+            2
+        );
+
+SELECT
+*
+FROM transactions
+
+--1. What is total annual Revenue?
+
+select ROUND(sum(revenue)) 
+from transactions
+
+-- Which transactions generate the most revenue?
+
+SELECT 
+    sp.item_name,
+    ROUND(SUM(t.revenue), 2) AS total_revenue
+
+FROM transactions AS t
+
+INNER JOIN services_products AS sp
+    ON sp.item_id = t.item_id
+
+GROUP BY sp.item_name
+
+ORDER BY total_revenue DESC;
+
+-- 2. Which services generate the most revenue (exclude equipment sales)--
+
+select 
+sp.item_name,
+ROUND(sum(t.revenue)) as total_revenue 
+from categories as c
+    INNER JOIN services_products as sp 
+on sp.category_id=c.category_id
+    INNER JOIN transactions as t
+on t.item_id=sp.item_id
+    where category_type='Service'
+    GROUP by sp.item_name
+        order by total_revenue DESC
+
+
+--3.  Which items sold generated the most money? 
+
+select 
+sp.item_name,
+ROUND(sum(t.revenue)) as total_revenue 
+from categories as c
+    INNER JOIN services_products as sp 
+on sp.category_id=c.category_id
+    INNER JOIN transactions as t
+on t.item_id=sp.item_id
+    where category_type='Product'
+    GROUP by sp.item_name
+        order by total_revenue DESC
+

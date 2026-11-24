@@ -1,0 +1,141 @@
+
+
+
+-- repeat customer % is %98.33 Recommend free first visits as they likely will come back. 
+-- Maybe offer free Malware cleans. The goal is to get customers in the door as they likely will come back 
+
+SELECT
+    COUNT(*) AS total_customers,
+    COUNT(*) FILTER (WHERE transaction_count > 1)
+        AS repeat_customers,
+    ROUND(
+        COUNT(*) FILTER (WHERE transaction_count > 1)
+        * 100.0 / NULLIF(COUNT(*), 0),
+        2
+    ) AS repeat_customer_rate
+
+FROM (
+    SELECT
+        customer_id,
+        COUNT(*) AS transaction_count
+
+    FROM transactions
+
+    WHERE customer_id IS NOT NULL
+
+    GROUP BY customer_id
+) AS customer_transactions;
+
+--what percentage of transactions come from repeat customers? 
+WITH customer_transactions AS (
+    SELECT
+        customer_id,
+        COUNT(*) AS transaction_count
+        
+    FROM transactions
+    WHERE customer_id IS NOT NULL
+    GROUP BY customer_id
+)
+
+SELECT
+    ROUND(
+        COUNT(*) FILTER (
+            WHERE ct.transaction_count > 1
+        ) * 100.0 / COUNT(*),
+        2
+    ) AS repeat_customer_transaction_rate
+
+FROM transactions t
+
+INNER JOIN customer_transactions ct
+    ON t.customer_id = ct.customer_id;
+    
+
+-- What is the average transaction value
+select
+   ROUND(
+    avg(unit_price*quantity), 2 ) as avg_transaction_value
+from transactions
+
+
+
+ --  Do repeat customers spend more than one-time customers?
+
+WITH customer_spending AS (
+    SELECT
+        customer_id,
+        COUNT(transaction_id) AS transaction_count,
+        SUM(unit_price * quantity) AS total_spent
+
+    FROM transactions
+
+    WHERE customer_id IS NOT NULL
+
+    GROUP BY customer_id
+)
+
+SELECT
+    CASE
+        WHEN transaction_count > 1 THEN 'Repeat Customer'
+        ELSE 'One-Time Customer'
+    END AS customer_type,
+
+    COUNT(customer_id) AS total_customers,
+    ROUND(SUM(total_spent), 2) AS total_revenue,
+    ROUND(AVG(total_spent), 2) AS avg_lifetime_customer_spending,
+    ROUND(
+        SUM(total_spent) / SUM(transaction_count), 2
+    ) AS avg_spending_per_transaction
+
+
+FROM customer_spending
+
+GROUP BY customer_type
+
+ORDER BY avg_lifetime_customer_spending DESC;
+
+
+-- Which services are purchased most frequently 
+
+SELECT
+    count(t.transaction_id) as times_purchased,
+    
+    sp.item_name
+from transactions as t 
+
+INNER JOIN services_products as sp
+    on sp.item_id=t.item_id
+INNER JOIN categories as ct
+    on ct.category_id=sp.category_id
+
+where ct.category_type='Service'
+
+GROUP BY sp.item_name
+
+order by times_purchased DESC
+
+/*Remote Troubleshooting is the most frequent Service performed yet was only the 7th highest profitable service.
+Recommendations include raising the price of remote support while still keeping customers happy by offering to do more, such as
+including updates to machine, check for malware, or offer more time per session to answer and questions customer may have.
+
+*/
+
+-- Question: Which equipment sales are purchased most frequently? 
+
+SELECT
+    count(t.transaction_id) as times_purchased,
+    
+    sp.item_name
+from transactions as t 
+
+INNER JOIN services_products as sp
+    on sp.item_id=t.item_id
+INNER JOIN categories as ct
+    on ct.category_id=sp.category_id
+
+where ct.category_type='Product'
+
+GROUP BY sp.item_name
+
+order by times_purchased DESC
+

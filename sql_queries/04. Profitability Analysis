@@ -1,0 +1,66 @@
+/*
+- What is the total cost of goods sold?
+- What is the overall gross profit?
+- What is the business's gross profit margin?
+- Which products and services generate the highest gross profit?
+- Which products or services have the lowest profit margins?
+- Are the highest-revenue products also the most profitable?
+*/
+--1. What is the total cost of goods sold?
+
+-- 1. What is the total COGS and gross profit?
+SELECT
+ROUND(SUM(revenue)) AS TOTAL_Revenue,
+ROUND(SUM(cogs)) as TOTAL_COGS,
+ROUND(SUM(gross_profit)) as TOTAL_gross_profit
+ FROM transactions
+
+
+-- 2. Which products have the highest and lowest gross margins?
+
+SELECT
+/*ROUND(SUM(cogs)) as COGS,
+ROUND(SUM(revenue)) AS Revenue,*/
+sp.item_name,
+ROUND(SUM(revenue)) AS TOTAL_Revenue,
+ROUND(SUM(gross_profit)) as gross_profit_total,
+    ROUND(
+        SUM(t.gross_profit) / NULLIF(SUM(t.revenue), 0) * 100,
+        2
+    ) AS gross_profit_margin
+FROM categories as c 
+
+    INNER JOIN services_products as sp 
+on sp.category_id=c.category_id
+    INNER JOIN transactions as t
+on t.item_id=sp.item_id
+    where category_type='Product'
+    GROUP by sp.item_name
+        order by gross_profit_total DESC
+
+
+-- 3. Which services have the highest profit 
+
+SELECT
+
+sp.item_name,
+ROUND(SUM(revenue)) AS TOTAL_Revenue,
+--ROUND(SUM(cogs)) as COGS,
+ROUND(SUM(gross_profit)) as gross_profit_total,
+    ROUND(
+        SUM(t.gross_profit) / NULLIF(SUM(t.revenue), 0) * 100,
+        2
+    ) AS gross_profit_margin
+FROM categories as c 
+
+    INNER JOIN services_products as sp 
+on sp.category_id=c.category_id
+    INNER JOIN transactions as t
+on t.item_id=sp.item_id
+    where category_type='Service'
+    GROUP by sp.item_name
+        order by gross_profit_total DESC
+
+/*
+
+![service_profits](Visualizations\service_profits.png)

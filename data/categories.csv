@@ -1,0 +1,7 @@
+category_id,category_name,category_type
+1,Computer Repair,Service
+2,House Call,Service
+3,Equipment Sales,Product
+4,Remote Support,Service
+5,Software & Account Help,Service
+6,Data Backup & Transfer,Service
