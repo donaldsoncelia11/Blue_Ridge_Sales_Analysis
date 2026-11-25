@@ -37,7 +37,7 @@ The dataset represents one year of business activity, from July 1, 2025, through
 
     Malware removal is the highest-revenue service, generating $7,523 annually. This indicates strong customer demand for cybersecurity and malware-related support.
 
-![Services Revenue](./visualizations/services_revenue.png)
+![Services Revenue](./Visualizations/services_revenue.png)
     *Chart made using Tableau Public*
 
  **Recommendation:** Consider expanding cybersecurity services through additional offerings, such as security assessments, preventative maintenance, and customer education on safe internet practices.
@@ -57,7 +57,7 @@ The dataset represents one year of business activity, from July 1, 2025, through
     **Recommendation:** Prioritize new customer acquisition through targeted marketing campaigns, referral incentives, and introductory service promotions. Free diagnostic may bring in customers who otherwise would be dissatisfied. Building a larger customer base while maintaining existing customer relationships could support long-term revenue growth without having to change pricing structures.
 
 
-![Customer_retention_data](./visualizations/customer_data.png)
+![Customer_retention_data](./Visualizations/customer_data.png)
 
 
 
@@ -192,7 +192,7 @@ While this policy provides the business with compensation for technicians' time 
 
 Hardware diagnostics generated **$2,218, representing approximately 2% of total revenue**. Although this policy generates some revenue independently of completed repairs, it may be worth evaluating whether the diagnostic fee discourages customers from service altogether, potentially limiting additional repair revenue and customer retention.
 
-![Services_Revenue](./visualizations/services_revenue.png)
+![Services_Revenue](./Visualizations/services_revenue.png)
 
 *Visualization created using Tableau Public*
 
@@ -210,7 +210,7 @@ on t.item_id=sp.item_id
     GROUP by sp.item_name
         order by revenue DESC
 ```
-![product revenue](./visualizations/Q1.3_Products_Revenue.png)
+![product revenue](./Visualizations/Q1.3_Products_Revenue.png)
 *Visualization created using Tableau Public*
 - **Refurbished Laptops and Desktop Computers:** Refurbished laptops and desktop computers are the leading product revenue generators, accounting for approximately **55% of total equipment revenue**. Combined, these products generated **$31,317**, representing approximately **30% of the business's total revenue**.
 
@@ -267,7 +267,7 @@ on t.item_id=sp.item_id
     GROUP by sp.item_name
         order by gross_profit_total DESC
 ```
-![product_table](./visualizations/products_table.png)
+![product_table](./Visualizations/products_table.png)
 
 **Healthy product sales after accounting for cost of goods**
 - Refurbished laptops are leading total Revenue as well as gross profits
@@ -296,7 +296,7 @@ on t.item_id=sp.item_id
         order by gross_profit_total DESC
 ```
 
-![service_profits](./visualizations/service_profits.png)
+![service_profits](./Visualizations/service_profits.png)
 
 **Very healthy Gross Profit Margins for all services**
 - Services that are leading total revenue are also leading comparable positions in gross profits. 
@@ -340,7 +340,7 @@ GROUP BY customer_type
 ORDER BY avg_lifetime_customer_spending DESC;
 
 ```
-![repeat customer ](./visualizations/repeat_vs_once.png)
+![repeat customer ](./Visualizations/repeat_vs_once.png)
 **Repeat Customer Spending** is a huge aspect of business 
 - repeat customers spend on average **$120 per visit**, contributing to **98% of total revenue!**
 - Majority of new customers come back. If business can get new customers in the door, they more than likely will return several times annually. 
